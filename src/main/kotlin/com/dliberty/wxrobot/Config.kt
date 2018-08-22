@@ -9,5 +9,5 @@ object Config {
     val msgTpl: String by prop.string("message.tpl")
     val msgDelay: Int by prop.int("task.wait", 3)
     val taskWait: Int by prop.int("task.wait", 3)
-    val taskTimer: Int by prop.int("task.timer", 60)
+    val taskTimer: Long by prop.long("task.timer", 60)
 }

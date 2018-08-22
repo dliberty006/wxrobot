@@ -13,7 +13,7 @@ import java.util.*
 
 class ADTask(private val wxBot: WXBot) : TimerTask() {
     private val users = wxBot.contact().list.filter { it.userName.startsWith("@@") }
-    private val couponParser = JSONParser({ JSON.parseObject(it, CouponRet::class.java) })
+    private val couponParser = JSONParser { JSON.parseObject(it, CouponRet::class.java) }
 
     override fun run() {
         try {
@@ -27,13 +27,13 @@ class ADTask(private val wxBot: WXBot) : TimerTask() {
             }
             val msg = renderMessage(gc.coupon)
             val img = downloadImage(gc.coupon.imgUrl)
-            users.forEach({
+            users.forEach {
                 Log.info("send msg %s %s", it.userName, msg)
                 wxBot.sendImg(it.userName, img)
                 this.sleep(Config.msgDelay)
                 wxBot.sendText(it.userName, msg)
                 this.sleep(Config.msgDelay)
-            })
+            }
         } catch (e: Exception) {
             Log.warn("failed to push message", e)
         }
