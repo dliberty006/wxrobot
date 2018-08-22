@@ -7,12 +7,10 @@ import okhttp3.Request
 import okhttp3.RequestBody
 import okhttp3.Response
 import org.apache.commons.io.FilenameUtils
-import org.jetbrains.kotlin.utils.sure
 import java.io.FileOutputStream
 import java.net.URL
 import java.nio.file.Paths
 import java.util.*
-import kotlin.reflect.KClass
 
 class HttpRequestParser<in T : BaseRequest> : RequestParser<T> {
     override fun parse(o: T): Request = when (o.method) {
@@ -25,16 +23,6 @@ class HttpRequestParser<in T : BaseRequest> : RequestParser<T> {
     private fun parsePOST(o: T): Request {
         val body = RequestBody.create(null, ByteArray(0))
         return Request.Builder().url(o.url).post(body).build()
-    }
-}
-
-object BaseParserFactory {
-    private val parserMapping = mutableMapOf<KClass<*>, RequestParser<*>>()
-    fun <T : BaseRequest> makeParser(cls: KClass<T>): RequestParser<T> {
-        if (cls !in parserMapping) {
-            parserMapping[cls] = HttpRequestParser<T>()
-        }
-        return parserMapping[cls]!! as HttpRequestParser<T>
     }
 }
 
