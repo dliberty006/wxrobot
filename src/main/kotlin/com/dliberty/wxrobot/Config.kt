@@ -10,4 +10,8 @@ object Config {
     val msgDelay: Int by prop.int("task.wait", 3)
     val taskWait: Int by prop.int("task.wait", 3)
     val taskTimer: Long by prop.long("task.timer", 60)
+    val shortenBase: String by prop.string("shorten.base")
+    val shortenURL: String = "%s/s".format(shortenBase)
+    val shortenReqURL: String by prop.string("shorten.requrl")
+    val findCouponReply: String by prop.string("findcoupon.reply")
 }
